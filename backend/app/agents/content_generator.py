@@ -37,7 +37,7 @@ CHANNEL_CONFIG = {
 
 class ContentGenerator:
     def __init__(self):
-        self.client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+        self.client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
 
     def _load_writing_style(self) -> str:
         """Load writing style guides from files."""
@@ -121,8 +121,8 @@ class ContentGenerator:
                 top_performers=top_performers,
             )
 
-            response = self.client.messages.create(
-                model="claude-opus-4-20250514",
+            response = await self.client.messages.create(
+                model="claude-sonnet-4-20250514",
                 max_tokens=8000,
                 system=system_prompt,
                 messages=[{"role": "user", "content": user_prompt}],

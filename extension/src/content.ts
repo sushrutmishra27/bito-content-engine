@@ -28,7 +28,52 @@ function createCaptureButton(): void {
   document.body.appendChild(button);
 }
 
-// Extract page content when requested
+// Selectors for elements to REMOVE before extraction (nav, sidebar, footer, etc.)
+const NOISE_SELECTORS = [
+  "nav",
+  "header",
+  "footer",
+  "aside",
+  "[role='navigation']",
+  "[role='banner']",
+  "[role='contentinfo']",
+  "[role='complementary']",
+  "[aria-label='Trending']",
+  "[data-testid='sidebarColumn']",
+  "[data-testid='primaryColumn'] > div:first-child", // Twitter top bar
+  ".sidebar",
+  ".nav",
+  ".navigation",
+  ".menu",
+  ".footer",
+  ".header",
+  "#sidebar",
+  "#nav",
+  "#footer",
+  "#header",
+  ".trending",
+  ".recommendations",
+  "script",
+  "style",
+  "noscript",
+  "iframe",
+];
+
+// Selectors for the MAIN content area (tried in order of specificity)
+const CONTENT_SELECTORS = [
+  "article",
+  "[role='article']",
+  "[data-testid='tweetText']",
+  ".post-content",
+  ".article-content",
+  ".entry-content",
+  ".post-body",
+  "main",
+  "[role='main']",
+  "#content",
+  ".content",
+];
+
 function extractPageContent(): {
   title: string;
   url: string;
@@ -36,7 +81,40 @@ function extractPageContent(): {
 } {
   const title = document.title;
   const url = location.href;
-  let content = document.body.innerText || "";
+
+  // Strategy 1: Try to find the main content element
+  for (const selector of CONTENT_SELECTORS) {
+    const elements = document.querySelectorAll(selector);
+    if (elements.length > 0) {
+      // Collect text from all matching elements (e.g., multiple tweet texts)
+      const texts: string[] = [];
+      elements.forEach((el) => {
+        const text = (el as HTMLElement).innerText?.trim();
+        if (text && text.length > 20) {
+          texts.push(text);
+        }
+      });
+      const combined = texts.join("\n\n");
+      if (combined.length > 50) {
+        return { title, url, content: combined.substring(0, 50000) };
+      }
+    }
+  }
+
+  // Strategy 2: Clone the body and strip noise elements
+  const clone = document.body.cloneNode(true) as HTMLElement;
+  for (const selector of NOISE_SELECTORS) {
+    clone.querySelectorAll(selector).forEach((el) => el.remove());
+  }
+
+  let content = clone.innerText || "";
+
+  // Clean up: remove excessive whitespace/newlines
+  content = content
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .join("\n");
 
   // Trim to 50000 chars
   if (content.length > 50000) {

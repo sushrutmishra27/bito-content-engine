@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 
 class ContextAssembler:
     def __init__(self):
-        self.client = anthropic.Anthropic(api_key=settings.anthropic_api_key)
+        self.client = anthropic.AsyncAnthropic(api_key=settings.anthropic_api_key)
 
     async def assemble_context(
         self,
@@ -45,7 +45,7 @@ class ContextAssembler:
             analytics_data=analytics_data or "No analytics data available this week.",
         )
 
-        response = self.client.messages.create(
+        response = await self.client.messages.create(
             model="claude-sonnet-4-20250514",
             max_tokens=4000,
             system=CONTEXT_ASSEMBLY_SYSTEM,
