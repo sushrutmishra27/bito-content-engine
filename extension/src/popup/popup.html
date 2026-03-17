@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bito Inspiration Extractor</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <div class="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 17L12 22L22 17" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M2 12L12 17L22 12" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <h1>Bito Inspiration</h1>
+      </div>
+    </header>
+
+    <div id="form-section">
+      <div class="field">
+        <label for="page-title">Page Title</label>
+        <input type="text" id="page-title" readonly placeholder="Loading...">
+      </div>
+
+      <div class="field">
+        <label for="page-url">URL</label>
+        <input type="text" id="page-url" readonly placeholder="Loading...">
+      </div>
+
+      <div class="field">
+        <label for="note">Your Note</label>
+        <textarea id="note" rows="4" placeholder="What caught your attention?"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="category">Category</label>
+        <select id="category">
+          <option value="product-insight">Product Insight</option>
+          <option value="competitor-intel">Competitor Intel</option>
+          <option value="industry-trend">Industry Trend</option>
+          <option value="content-idea">Content Idea</option>
+          <option value="engineering">Engineering</option>
+          <option value="customer-story">Customer Story</option>
+        </select>
+      </div>
+
+      <button id="capture-btn" class="capture-btn">
+        <span id="btn-text">Capture</span>
+        <span id="btn-spinner" class="spinner hidden"></span>
+      </button>
+    </div>
+
+    <div id="success-section" class="hidden">
+      <div class="success-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <polyline points="22,4 12,14.01 9,11.01" stroke="#22c55e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="success-text">Inspiration captured!</p>
+      <button id="capture-another" class="capture-btn secondary">Capture Another</button>
+    </div>
+
+    <div id="error-section" class="hidden">
+      <div class="error-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="12" r="10" stroke="#ef4444" stroke-width="2"/>
+          <line x1="15" y1="9" x2="9" y2="15" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+          <line x1="9" y1="9" x2="15" y2="15" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <p class="error-text" id="error-message">Something went wrong</p>
+      <button id="retry-btn" class="capture-btn">Try Again</button>
+    </div>
+  </div>
+
+  <script src="../../dist/popup/popup.js"></script>
+</body>
+</html>

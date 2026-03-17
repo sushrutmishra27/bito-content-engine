@@ -1,0 +1,13 @@
+{
+  "name": "bito-inspiration-extractor",
+  "version": "1.0.0",
+  "description": "Chrome extension to capture web page content for Bito Content Engine",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node build.mjs --watch"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.0",
+    "typescript": "^5.3.0"
+  }
+}
