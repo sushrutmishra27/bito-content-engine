@@ -88,10 +88,9 @@ async function handleCapture(): Promise<void> {
     const payload: InspirationPayload = {
       title: pageTitleInput.value,
       url: pageUrlInput.value,
-      content: extractedContent,
+      content_markdown: extractedContent,
       note: noteTextarea.value,
       category: categorySelect.value,
-      capturedAt: new Date().toISOString(),
     };
 
     await sendInspiration(payload);

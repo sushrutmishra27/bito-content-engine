@@ -3,10 +3,9 @@ const DEFAULT_API_URL = "http://localhost:8000";
 export interface InspirationPayload {
   title: string;
   url: string;
-  content: string;
+  content_markdown: string;
   note: string;
   category: string;
-  capturedAt: string;
 }
 
 export interface ApiResponse {
